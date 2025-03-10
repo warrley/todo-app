@@ -8,15 +8,18 @@ export default function App() {
   const [text, setText] = useState('');
   const [tasks, setTasks] = useState<TaskType[]>([]);
   
-  useEffect(() => {
-    setTasks([
-      {id: 1, label: "buy ball"},
-      {id: 2, label: "walk cat"},
-    ])
-  },[])
-  
   const handleAdd = () => {
-    alert(text);
+    if (!text) {
+      alert("Enter a task!");
+      return;
+    };
+
+    setTasks(prev => [...prev, { id: (prev.length + 1), label: text }]);
+    setText('');
+  };
+
+  const handleDelete = (id: number) => {
+    setTasks(prev => prev.filter(item => item.id !== id) )
   }
 
   return (
@@ -26,7 +29,7 @@ export default function App() {
         <View style={{ flexDirection: "row", gap: 10 }}>
           <TextInput
             style={s.input}
-            placeholder="Enter your new task..."
+            placeholder="Enter your task..."
             value={text}
             onChangeText={e => setText(e)}
           />
@@ -35,8 +38,12 @@ export default function App() {
           </Pressable>
         </View>
       </View>
-      <View style={{ paddingHorizontal: 20, marginTop: 20 }}>
-        <Task task={tasks}/>
+      <View style={{ paddingHorizontal: 20, marginTop: 20}}>
+        <FlatList
+          data={tasks}
+          renderItem={({ item }) => <Task task={item} handleDelete={handleDelete} />}
+          keyExtractor={item => item.id.toString()}
+        />
       </View>
     </View>
   );
