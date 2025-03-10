@@ -1,5 +1,6 @@
 import { StyleSheet, StatusBar, View, Text, TextInput, Pressable } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome"
+import { Task } from "./components/Task";
 
 export default function App() {
   return (
@@ -16,10 +17,8 @@ export default function App() {
           </Pressable>
         </View>
       </View>
-      <View>
-        <View>
-          
-        </View>
+      <View style={{ paddingHorizontal: 20, marginTop: 20 }}>
+        <Task/>
       </View>
     </View>
   );
