@@ -1,11 +1,12 @@
 import { Pressable, StyleSheet, Text, View } from "react-native"
 import FontAwesome from "@expo/vector-icons/FontAwesome"
+import { TaskType } from "../types/Task";
 
-export const Task = () => {
+export const Task = ({ task }: {task: TaskType[]}) => {
     return (
         <View style={s.container} >
             <Pressable><FontAwesome name="trash" size={30} /></Pressable>
-            <Text style={{ fontSize: 20, fontWeight: "bold" }}>Buy food</Text>
+            <Text style={{ fontSize: 20, fontWeight: "bold" }}>{task[0].label}</Text>
         </View>
     );
 };

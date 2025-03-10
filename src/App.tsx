@@ -1,8 +1,24 @@
-import { StyleSheet, StatusBar, View, Text, TextInput, Pressable } from "react-native";
+import { StyleSheet, StatusBar, View, Text, TextInput, Pressable, FlatList } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome"
 import { Task } from "./components/Task";
+import { useEffect, useState } from "react";
+import { TaskType } from "./types/Task";
 
 export default function App() {
+  const [text, setText] = useState('');
+  const [tasks, setTasks] = useState<TaskType[]>([]);
+  
+  useEffect(() => {
+    setTasks([
+      {id: 1, label: "buy ball"},
+      {id: 2, label: "walk cat"},
+    ])
+  },[])
+  
+  const handleAdd = () => {
+    alert(text);
+  }
+
   return (
     <View style={s.container}>
       <View style={s.header}>
@@ -11,14 +27,16 @@ export default function App() {
           <TextInput
             style={s.input}
             placeholder="Enter your new task..."
+            value={text}
+            onChangeText={e => setText(e)}
           />
-          <Pressable style={s.button}>
+          <Pressable style={s.button} onPress={handleAdd}>
             <FontAwesome name="plus" color="white" size={20}/>
           </Pressable>
         </View>
       </View>
       <View style={{ paddingHorizontal: 20, marginTop: 20 }}>
-        <Task/>
+        <Task task={tasks}/>
       </View>
     </View>
   );
